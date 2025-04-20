@@ -138,8 +138,9 @@
         }
 
         function getFilenameFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('page') || 'index.md';
+          const path = window.location.pathname;
+          const filename = path === '/' ? 'index.md' : path.slice(1);
+          return filename;
         }
       
         function toggleTheme() {
