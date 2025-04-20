@@ -20,7 +20,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid #eaecef;
         padding-bottom: 16px;
         margin-bottom: 16px;
         flex-wrap: wrap;
@@ -50,9 +49,9 @@
     }
 
     .theme-toggle {
-        background-color: #f6f8fa;
+        background-color: #ffffff;
         border: 1px solid #dfe2e5;
-        border-radius: 6px;
+        border-radius: 12px;
         padding: 6px 12px;
         cursor: pointer;
         font-size: clamp(13px, 2.5vw, 15px);
@@ -151,19 +150,13 @@
         border-color: #30363d;
     }
 
+    .dark-mode .theme-toggle {
+        background-color: #c9d1d9;
+    }
+
     @media (max-width: 600px) {
         body {
             padding: 10px;
-        }
-
-        header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .theme-toggle {
-            width: 100%;
-            text-align: center;
         }
 
         .logo img {
