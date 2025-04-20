@@ -12,4 +12,6 @@
 
 > Пример управления:
 
-![Управление ботом](https://minebots.ru/img/bot_in_use.jpg)
+<p align="center">
+  <img src="img/bot_in_use.jpg" alt="Управление ботом">
+</p>
