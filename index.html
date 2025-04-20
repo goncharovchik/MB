@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown GitHub Pages</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 16px;
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+        #content {
+            background-color: #fff;
+            border-radius: 6px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+        pre {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+        }
+        code {
+            font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 85%;
+            background-color: #f6f8fa;
+            border-radius: 3px;
+            padding: 0.2em 0.4em;
+        }
+        blockquote {
+            border-left: 4px solid #dfe2e5;
+            color: #6a737d;
+            padding-left: 16px;
+            margin-left: 0;
+        }
+        img {
+            max-width: 100%;
+        }
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        table, th, td {
+            border: 1px solid #dfe2e5;
+        }
+        th, td {
+            padding: 8px 16px;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+        .theme-toggle {
+            background-color: #f6f8fa;
+            border: 1px solid #dfe2e5;
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .dark-mode {
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .dark-mode #content {
+            background-color: #161b22;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .dark-mode pre, .dark-mode code {
+            background-color: #1f2937;
+        }
+        .dark-mode a {
+            color: #58a6ff;
+        }
+        .dark-mode blockquote {
+            border-left-color: #30363d;
+            color: #8b949e;
+        }
+        .dark-mode tr:nth-child(even) {
+            background-color: #1f2937;
+        }
+        .dark-mode table, .dark-mode th, .dark-mode td {
+            border-color: #30363d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Markdown GitHub Pages</h1>
+        <p class="subtitle">Простой сайт для отображения Markdown-контента</p>
+        <button class="theme-toggle" onclick="toggleTheme()">Сменить тему</button>
+    </header>
+    
+    <div id="content">
+        <!-- Markdown будет отображаться здесь -->
+        <div id="markdown-content"></div>
+    </div>
+
+    <script>
+        async function loadMarkdownFile(filename) {
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) {
+                    throw new Error(`Не удалось загрузить файл: ${filename}`);
+                }
+                const markdown = await response.text();
+                document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+            } catch (error) {
+                console.error(error);
+                // Если файл не найден, показываем пример контента
+                document.getElementById('markdown-content').innerHTML = marked.parse(defaultMarkdown);
+            }
+        }
+
+        function getFilenameFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('page') || 'README.md';
+        }
+      
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function initTheme() {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        window.onload = function() {
+            // Настройка marked для безопасной обработки
+            marked.setOptions({
+                breaks: true,
+                gfm: true,
+                headerIds: true,
+                sanitize: false  // Marked v1.0+ больше не поддерживает sanitize
+            });
+
+            initTheme();
+
+            const filename = getFilenameFromUrl() + '.md';
+            loadMarkdownFile(filename);
+        };
+    </script>
+</body>
+</html>
