@@ -139,13 +139,14 @@
 
        function getFilenameFromUrl() {
             // Check if the pathname contains more than just "/"
+           console.log(window.location.pathname)
            if (window.location.pathname.length > 1) {
             // Return the pathname without the leading slash
-               return window.location.pathname.substring(1);
+               return window.location.pathname.substring(1) + '.md';
            } else {
             // Fall back to the old method for compatibility
                const params = new URLSearchParams(window.location.search);
-               return params.get('page') || 'index.md';
+               return params.get('page') + '.md' || 'index.md';
            }
        }
       
