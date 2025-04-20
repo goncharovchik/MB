@@ -138,9 +138,16 @@
         }
 
        function getFilenameFromUrl() {
-           const params = new URLSearchParams(window.location.search);
-           return params.get('page') || 'index.md';
-        }
+            // Check if the pathname contains more than just "/"
+           if (window.location.pathname.length > 1) {
+            // Return the pathname without the leading slash
+               return window.location.pathname.substring(1);
+           } else {
+            // Fall back to the old method for compatibility
+               const params = new URLSearchParams(window.location.search);
+               return params.get('page') || 'index.md';
+           }
+       }
       
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
