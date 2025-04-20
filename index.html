@@ -138,20 +138,8 @@
         }
 
        function getFilenameFromUrl() {
-          let path = window.location.pathname;
-
-          // Удаляем ведущий и конечный /
-          path = path.replace(/^\/|\/$/g, '');
-
-          // Если пусто — возвращаем index.md
-          if (!path) return 'index.md';
-
-          // Если нет расширения .md — добавляем его
-          if (!path.endsWith('.md')) {
-              path += '.md';
-          }
-
-          return path;
+           const params = new URLSearchParams(window.location.search);
+           return params.get('page') || 'index.md';
         }
       
         function toggleTheme() {
