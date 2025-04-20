@@ -139,7 +139,6 @@
 
        function getFilenameFromUrl() {
             // Check if the pathname contains more than just "/"
-           console.log(window.location.pathname)
            if (window.location.pathname.length > 1) {
             // Return the pathname without the leading slash
                return window.location.pathname.substring(1);
@@ -174,6 +173,7 @@
             initTheme();
 
             const filename = getFilenameFromUrl() + '.md';
+            console.log(filename)
             loadMarkdownFile(filename);
         };
     </script>
